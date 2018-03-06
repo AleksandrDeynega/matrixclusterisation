@@ -13,6 +13,16 @@ def print_clustered_matrix(clusters):
         print("______________________________________________")
 
 
+def print_full_info_clustered_matrix(clusters):
+    for key, cluster in clusters.items():
+        print(str(key) + ":")
+        print_matrix(np.mean(cluster, axis=0))
+        for matrix in cluster:
+            print("_________")
+            print_matrix(matrix)
+        print("______________________________________________")
+
+
 def print_matrix(matrix):
     for row in matrix:
         print(row)
