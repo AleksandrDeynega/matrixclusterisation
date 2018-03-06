@@ -22,7 +22,7 @@ class KMeans:
 
     def _init_centers(self):
         # return random.sample(self.X, self.K)
-        self.centers = random.sample(self.X, 1)
+        self.centers = random.sample(list(self.X), 1)
         while len(self.centers) < self.K:
             self.centers.append(self._find_next_center())
         self.first_centers = self.centers
@@ -55,6 +55,7 @@ class KMeans:
         return np.array([self._min_squared_distance_to_centers(x) for x in self.X])
 
     def _has_converged(self):
+        print(type(self.centers[0]))
         return self.old_centers is not None and \
                (set([tuple(a) for a in self.centers]) ==
                 set([tuple(a) for a in self.old_centers]))
@@ -71,9 +72,11 @@ class KMeans:
         self._init_centers()
         self.clusters = self._init_clusters()
         iterations = 0
+        print(self.centers)
         while not self._has_converged() and iterations < self.max_iterations:
             self._cluster_points()
             self._reevaluate_centers()
+            print(self.centers)
             iterations += 1
         if iterations == self.max_iterations:
             raise Exception("Max iter has been reached!")

@@ -4,14 +4,21 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 
 from kmeans import KMeans
+from matrix import MatrixBuilder
 
 
 def find_center(cluster):
-    return np.mean(cluster, axis=0)
+    print(cluster)
+    print(len(cluster))
+    print(np.sum(cluster, axis=0))
+    return [[np.sum(np.sum(cluster, axis=0), axis=0) / len(cluster),
+             np.sum(np.sum(cluster, axis=0), axis=1) / len(cluster)],
+            [np.sum(np.sum(cluster, axis=1), axis=0) / len(cluster),
+             np.sum(np.sum(cluster, axis=1), axis=1) / len(cluster)]]
 
 
 def distance_between(a, b):
-    return np.linalg.norm(a - b)
+    return np.sum(a) - np.sum(b)
 
 
 def init_board_gauss(N, k):
@@ -39,17 +46,17 @@ def plot_board(centers, first_centers, real_centers, clusters, X):
     fig = plt.figure(figsize=(5, 5))
     plt.xlim(-1, 1)
     plt.ylim(-1, 1)
-    print type(real_centers[0])
+    print(type(real_centers[0]))
     if centers and clusters:
         for m, cluster in clusters.items():
             cs = cm.spectral(1. * m / K)
-            # plt.plot(first_centers[m][0], first_centers[m][1], '.', marker='o',
-            #          markersize=8, color='red')
-            # plt.plot(real_centers[m][0], real_centers[m][1], '.', marker='*',
-            #          markersize=12, color='cs')
+            plt.plot(first_centers[m][0], first_centers[m][1], '.', marker='o',
+                     markersize=8, color='grey')
+            plt.plot(real_centers[m][0], real_centers[m][1], '.', marker='.',
+                     markersize=12, color='red')
             # plt.plot(centers[m][0], centers[m][1], 'o', marker='*',
             #          markersize=12, color=cs)
-            plt.plot(zip(*clusters[m])[0], zip(*clusters[m])[1], '.',
+            plt.plot([point[0] for point in clusters[m]], [point[1] for point in clusters[m]], '.',
                      markersize=8, color=cs, alpha=0.5)
     else:
         plt.plot(zip(*X)[0], zip(*X)[1], '.', alpha=0.5)
@@ -62,9 +69,11 @@ def plot_board(centers, first_centers, real_centers, clusters, X):
 
 
 if __name__ == "__main__":
-    board = init_board_gauss(200, 5)
-    X = board[0]
-    real_centers = board[1]
-    kmeans = KMeans(5, X)
-    plot_board(X=X, clusters=kmeans.fit(), centers=kmeans.centers, first_centers=kmeans.first_centers,
-               real_centers=real_centers)
+    # board = init_board_gauss(200, 5)
+    # X = board[0]
+    # real_centers = board[1]
+    kmeans = KMeans(4, MatrixBuilder.all_binary_square_matrix_of_size_2(), find_center=find_center,
+                    distance_between=distance_between)
+    print(kmeans.fit())
+    # plot_board(X=X, clusters=kmeans.fit(), centers=kmeans.centers, first_centers=kmeans.first_centers,
+    #            real_centers=real_centers)
