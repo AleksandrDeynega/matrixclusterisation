@@ -55,7 +55,6 @@ class KMeans:
         return np.array([self._min_squared_distance_to_centers(x) for x in self.X])
 
     def _has_converged(self):
-        print("centers = " + str(type(self.centers)))
         return self.old_centers is not None and \
                (set([tuple([tuple(a[0]), tuple(a[1])]) for a in self.centers]) ==
                 set([tuple([tuple(a[0]), tuple(a[1])]) for a in self.old_centers]))
@@ -72,7 +71,6 @@ class KMeans:
         self._init_centers()
         self.clusters = self._init_clusters()
         iterations = 0
-        print(self.centers)
         while not self._has_converged() and iterations < self.max_iterations:
             self._cluster_points()
             self._reevaluate_centers()
