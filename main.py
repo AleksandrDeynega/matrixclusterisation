@@ -8,17 +8,11 @@ from matrix import MatrixBuilder
 
 
 def find_center(cluster):
-    print(cluster)
-    print(len(cluster))
-    print(np.sum(cluster, axis=0))
-    return [[np.sum(np.sum(cluster, axis=0), axis=0) / len(cluster),
-             np.sum(np.sum(cluster, axis=0), axis=1) / len(cluster)],
-            [np.sum(np.sum(cluster, axis=1), axis=0) / len(cluster),
-             np.sum(np.sum(cluster, axis=1), axis=1) / len(cluster)]]
+    return np.mean(cluster, axis=0)
 
 
 def distance_between(a, b):
-    return np.sum(a) - np.sum(b)
+    return abs(np.sum(a) - np.sum(b))
 
 
 def init_board_gauss(N, k):
@@ -69,11 +63,7 @@ def plot_board(centers, first_centers, real_centers, clusters, X):
 
 
 if __name__ == "__main__":
-    # board = init_board_gauss(200, 5)
-    # X = board[0]
-    # real_centers = board[1]
-    kmeans = KMeans(4, MatrixBuilder.all_binary_square_matrix_of_size_2(), find_center=find_center,
+    X = MatrixBuilder.all_binary_square_matrix_of_size_2()
+    kmeans = KMeans(3, X, find_center=find_center,
                     distance_between=distance_between)
     print(kmeans.fit())
-    # plot_board(X=X, clusters=kmeans.fit(), centers=kmeans.centers, first_centers=kmeans.first_centers,
-    #            real_centers=real_centers)

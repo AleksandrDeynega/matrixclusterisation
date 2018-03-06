@@ -55,10 +55,10 @@ class KMeans:
         return np.array([self._min_squared_distance_to_centers(x) for x in self.X])
 
     def _has_converged(self):
-        print(type(self.centers[0]))
+        print("centers = " + str(type(self.centers)))
         return self.old_centers is not None and \
-               (set([tuple(a) for a in self.centers]) ==
-                set([tuple(a) for a in self.old_centers]))
+               (set([tuple([tuple(a[0]), tuple(a[1])]) for a in self.centers]) ==
+                set([tuple([tuple(a[0]), tuple(a[1])]) for a in self.old_centers]))
 
     def _reevaluate_centers(self):
         self.old_centers = self.centers
@@ -76,7 +76,6 @@ class KMeans:
         while not self._has_converged() and iterations < self.max_iterations:
             self._cluster_points()
             self._reevaluate_centers()
-            print(self.centers)
             iterations += 1
         if iterations == self.max_iterations:
             raise Exception("Max iter has been reached!")
