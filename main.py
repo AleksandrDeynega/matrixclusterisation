@@ -1,11 +1,8 @@
-import random
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.cm as cm
 
+import utils
 from kmeans import KMeans
 from matrix import MatrixBuilder
-import utils
 
 
 def find_center(cluster):
@@ -17,11 +14,11 @@ def distance_between(a, b):
 
 
 if __name__ == "__main__":
-    X = MatrixBuilder.all_binary_square_matrix_of_size_2()
-    kmeans = KMeans(4, X, find_center=find_center,
+    X = MatrixBuilder.all_binary_square_matrix_of_size(3)
+    kmeans = KMeans(8, X, find_center=find_center,
                     distance_between=distance_between)
     # utils.print_matrix(X[0])
     # utils.print_matrix(X[15])
     # print (distance_between(X[0], X[15]))
     # print (abs(np.matrix(X[0]) - np.matrix(X[15])))
-    utils.print_full_info_clustered_matrix(kmeans.fit())
+    utils.print_clustered_matrix_by_rows(10, kmeans.fit())

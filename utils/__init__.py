@@ -13,6 +13,30 @@ def print_clustered_matrix(clusters):
         print("______________________________________________")
 
 
+def print_clustered_matrix_by_rows(row_size, clusters):
+    for key, value in clusters.items():
+        print(str(key) + ":")
+        print_matrix(np.mean(value, axis=0))
+        value = split_in_chunks_of_size(row_size, value)
+        for row in value:
+            print_n_matrix_in_row(row)
+        print("_______________________________________________________________________________")
+
+
+def print_n_matrix_in_row(matrixs):
+    # print(("_" * len(matrixs[0][0] * 2 + 1) + "   ") * len(matrixs))
+    print("")
+    for i in range(len(matrixs[0])):
+        s = ""
+        for j in range(len(matrixs)):
+            s += str(matrixs[j][i]) + "  "
+        print(s)
+
+
+def split_in_chunks_of_size(n, list):
+    return [list[i:i + n] for i in range(0, len(list), n)]
+
+
 def print_full_info_clustered_matrix(clusters):
     for key, cluster in clusters.items():
         print(str(key) + ":")

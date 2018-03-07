@@ -1,19 +1,12 @@
+import numpy as np
+
+
 class MatrixBuilder:
+
     @staticmethod
-    def all_binary_square_matrix_of_size_2():
-        return [[[0, 0], [0, 0]],
-                [[1, 0], [0, 0]],
-                [[0, 1], [0, 0]],
-                [[0, 0], [1, 0]],
-                [[0, 0], [0, 1]],
-                [[1, 1], [0, 0]],
-                [[0, 1], [0, 1]],
-                [[0, 0], [1, 1]],
-                [[1, 0], [1, 0]],
-                [[1, 0], [0, 1]],
-                [[0, 1], [1, 0]],
-                [[1, 0], [1, 1]],
-                [[1, 1], [0, 1]],
-                [[1, 1], [1, 0]],
-                [[0, 1], [1, 1]],
-                [[1, 1], [1, 1]]]
+    def all_binary_square_matrix_of_size(n):
+        X = []
+        shift = np.arange(n * n).reshape(n, n)
+        for j in range(2 ** (n * n)):
+            X.append(j >> shift & 1)
+        return X
