@@ -24,4 +24,5 @@ if __name__ == "__main__":
     kmeans = KMeans(8, X, find_center=find_center,
                     distance_between=form_difference)
     clusters = kmeans.fit()
+    utils.print_clustered_matrix_by_rows(10, clusters, kmeans.centers)
     visualization.plot_clustered_matrix(clusters, kmeans.centers)

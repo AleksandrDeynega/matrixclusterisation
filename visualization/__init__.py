@@ -17,18 +17,21 @@ class MatrixClusterPlotter:
         self.center = center
         self.fig.subplots_adjust(hspace=0.1, wspace=0.1)
         self.matrix_in_row = 10
-        self.rows = np.ceil((len(cluster) + 2) / self.matrix_in_row)
+        self.rows = 1 + (np.ceil((len(cluster)) / self.matrix_in_row))
 
     def plot(self):
         text = self.fig.add_subplot(self.rows, self.matrix_in_row, 1)
-        text.text(0.5, 0.7, "Center: ",
+        text.text(0.5, 0.7, self.title(),
                   horizontalalignment='center', verticalalignment='center')
         text.set_axis_off()
-        text.set_xticks([])
-        self.add_subplot_of_matrix(2, self.center)
+        self.add_subplot_of_matrix(3, self.center)
         for i, matrix in enumerate(self.cluster):
-            self.add_subplot_of_matrix(i + 3, matrix)
+            self.add_subplot_of_matrix(i + 11, matrix)
         plt.savefig("Cluster: " + str(self.key), bbox_inches='tight', dpi=200)
+
+    def title(self):
+        return "\n".join(["Center " + str(self.key) + " : ",
+                          "Lenght :" + str(len(self.cluster))])
 
     def add_subplot_of_matrix(self, i, matrix):
         ax = self.fig.add_subplot(self.rows, self.matrix_in_row, i)
