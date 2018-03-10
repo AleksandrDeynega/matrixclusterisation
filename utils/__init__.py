@@ -13,7 +13,8 @@ def print_clustered_matrix(clusters):
         print("______________________________________________")
 
 
-def print_clustered_matrix_by_rows(row_size, clusters, centers):
+def print_clustered_matrix_by_rows(clusters, centers):
+    row_size = 10
     for key, cluster, center in zip(clusters.keys(), clusters.values(), centers):
         print(str(key) + ":")
         print_matrix(center)

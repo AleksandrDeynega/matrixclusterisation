@@ -5,7 +5,8 @@ import numpy as np
 class KMeans:
     def __init__(self, K, X=None, max_iter=100,
                  distance_between=lambda a, b: np.linalg.norm(a - b),
-                 find_center=lambda cluster: np.mean(cluster, axis=0)):
+                 find_center=lambda cluster: np.mean(cluster, axis=0),
+                 n_init=10):
         self.K = K
         if X is None:
             raise Exception("If no data is provided!")
@@ -16,6 +17,20 @@ class KMeans:
         self.clusters = None
         self.old_centers = None
         self.centers = None
+        self.n_init = n_init
+        self.min_distances_sum = None
+        self.best_clusters = None
+        self.best_centers = None
+
+    def _reset_best_clusters(self):
+        distances_sum = 0
+        for cluster, center in zip(self.clusters.values(), self.centers):
+            for point in cluster:
+                distances_sum += self.distance_between(point, center)
+        if self.min_distances_sum is None or distances_sum < self.min_distances_sum:
+            self.best_centers = self.centers
+            self.best_clusters = self.clusters
+            self.min_distances_sum = distances_sum
 
     def _init_clusters(self):
         return {i: [] for i in range(self.K)}
@@ -67,7 +82,7 @@ class KMeans:
             new_centers.append(self.find_center(self.clusters[k]))
         self.centers = new_centers
 
-    def fit(self):
+    def _fit_one(self):
         self._init_centers()
         self.clusters = self._init_clusters()
         iterations = 0
@@ -78,3 +93,9 @@ class KMeans:
         if iterations == self.max_iterations:
             raise Exception("Max iter has been reached!")
         return self.clusters
+
+    def fit(self):
+        for i in range(self.n_init):
+            self._fit_one()
+            self._reset_best_clusters()
+        return self.best_clusters

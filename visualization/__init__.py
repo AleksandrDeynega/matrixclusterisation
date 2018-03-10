@@ -9,7 +9,6 @@ def plot_clustered_matrix(clusters, centers):
 
 
 class MatrixClusterPlotter:
-
     def __init__(self, key, cluster, center):
         self.fig = plt.figure()
         self.cluster = cluster
@@ -25,16 +24,17 @@ class MatrixClusterPlotter:
                   horizontalalignment='center', verticalalignment='center')
         text.set_axis_off()
         self.add_subplot_of_matrix(3, self.center)
+        print("length :" + str(len(self.cluster)))
         for i, matrix in enumerate(self.cluster):
             self.add_subplot_of_matrix(i + 11, matrix)
-        plt.savefig("Cluster: " + str(self.key), bbox_inches='tight', dpi=200)
+        plt.savefig("output/Cluster: " + str(self.key), bbox_inches='tight', dpi=200)
 
     def title(self):
         return "\n".join(["Center " + str(self.key) + " : ",
-                          "Lenght :" + str(len(self.cluster))])
+                          "Length :" + str(len(self.cluster))])
 
     def add_subplot_of_matrix(self, i, matrix):
         ax = self.fig.add_subplot(self.rows, self.matrix_in_row, i)
         ax.set_yticks([])
         ax.set_xticks([])
-        ax.imshow(matrix, interpolation='nearest', cmap='Greys_r')
+        ax.imshow(matrix, interpolation='nearest', cmap='Greys_r', vmin=0, vmax=1)
