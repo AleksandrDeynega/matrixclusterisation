@@ -22,8 +22,14 @@ def sums_difference(a, b):
 
 
 if __name__ == "__main__":
-    X = random.sample(MatrixBuilder.all_binary_square_matrix_of_size(3), 40)
-    kmeans = KMeans(4, X, find_center=find_center,
+    X = MatrixBuilder.all_binary_square_matrix_of_size(3)
+
+    X1 = []
+    X1.extend(X[:8])
+    X1.extend(X[56:64])
+
+    utils.print_matrix_in_rows(X1, 8)
+    kmeans = KMeans(2, X1, find_center=find_center,
                     distance_between=form_difference)
     clusters = kmeans.fit()
     utils.print_clustered_matrix_by_rows(clusters, kmeans.best_centers)
