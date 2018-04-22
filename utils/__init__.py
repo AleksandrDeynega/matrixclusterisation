@@ -105,10 +105,14 @@ def build_affinity_matrix(X, distance):
     return [[-(distance(x, y)) ** 2 for y in X] for x in X]
 
 
+def build_distance_matrix(X, distance):
+    return [[distance(x, y) for y in X] for x in X]
+
+
 def build_clusters(labels, X):
-    return {cluster_label:
-                [X[number] for number, label in enumerate(labels) if label == cluster_label]
-            for cluster_label in range(len(set(labels)))}
+    return {cluster_label: np.array(
+        [X[number] for number, label in enumerate(labels) if label == cluster_label])
+        for cluster_label in set(labels)}
 
 
 def build_centers(cluster_centers_indices, X):

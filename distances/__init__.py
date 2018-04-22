@@ -11,3 +11,7 @@ def form_difference(a, b):
 
 def sums_difference(a, b):
     return abs(np.sum(b) - np.sum(a))
+
+
+def max_col_sum(a, b):
+    return np.sum(b, axis=1).max() - np.sum(a, axis=1).max()

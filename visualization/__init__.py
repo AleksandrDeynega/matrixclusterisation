@@ -37,4 +37,6 @@ class MatrixClusterPlotter:
         ax = self.fig.add_subplot(self.rows, self.matrix_in_row, i)
         ax.set_yticks([])
         ax.set_xticks([])
+        print("Matrix :")
+        print(matrix)
         ax.imshow(matrix, interpolation='nearest', cmap='Greys', vmin=0, vmax=1)
