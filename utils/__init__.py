@@ -96,3 +96,17 @@ def plot_board(centers, first_centers, real_centers, clusters, X):
     plt.title('\n'.join([pars, tit]), fontsize=16)
     plt.savefig('K-means_N%s_K%s.png' % (str(N), str(K)),
                 bbox_inches='tight', dpi=200)
+
+
+def build_affinity_matrix(X, distance):
+    return [[-(distance(x, y)) ** 2 for y in X] for x in X]
+
+
+def build_clusters(labels, X):
+    return {cluster_label:
+                [X[number] for number, label in enumerate(labels) if label == cluster_label]
+            for cluster_label in range(len(set(labels)))}
+
+
+def build_centers(cluster_centers_indices, X):
+    return [X[number] for number in cluster_centers_indices]
