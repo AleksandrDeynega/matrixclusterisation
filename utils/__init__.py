@@ -13,17 +13,20 @@ def print_clustered_matrix(clusters):
         print("______________________________________________")
 
 
-def print_clustered_matrix_by_rows(clusters, centers):
-    row_size = 10
+def print_clustered_matrix_by_rows(clusters, centers, row_size=10):
     for key, cluster, center in zip(clusters.keys(), clusters.values(), centers):
         print(str(key) + ":")
         print_matrix(center)
-        for row in split_in_chunks_of_size(row_size, cluster):
-            print_n_matrix_in_row(row)
+        print_matrix_in_rows(cluster, row_size)
         print("_______________________________________________________________________________")
 
 
-def print_n_matrix_in_row(matrixs):
+def print_matrix_in_rows(cluster, row_size):
+    for row in split_in_chunks_of_size(row_size, cluster):
+        print_matrix_in_row(row)
+
+
+def print_matrix_in_row(matrixs):
     print("")
     for i in range(len(matrixs[0])):
         s = ""
