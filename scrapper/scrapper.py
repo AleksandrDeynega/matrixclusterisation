@@ -3,6 +3,8 @@ import requests
 
 base_url = "https://tradecompetitivenessmap.intracen.org/TPIC.aspx"
 
+sectors = ["%.2d" % i for i in range(1, 15)]
+
 
 def url(country):
     return base_url + "?RP=00{}".format(country)
@@ -14,29 +16,34 @@ def print_values(soup):
         print("{}       {}".format(row.findAll("td")[3].text, row.findAll("td")[4].text))
 
 
+def get_values(soup):
+    rows = soup.find("table", {"id": "RadGrid1_ctl01"}).tbody.findAll("tr")
+    for row in rows:
+        print("{}       {}".format(row.findAll("td")[3].text, row.findAll("td")[4].text))
+
+
 def main():
-    # with requests.Session() as session:
-    session = requests.Session()
-    response = session.get(base_url)
-    # print(response.content)
-    soup = BeautifulSoup(response.content, "lxml")
+    with requests.Session() as session:
+        session = requests.Session()
+        response = session.get(base_url)
+        # print(response.content)
+        soup = BeautifulSoup(response.content, "lxml")
+        for sector in sectors:
+            data = {'__EVENTTARGET': '',
+                    '__EVENTARGUMENT': '',
+                    '__LASTFOCUS': '',
+                    '__VIEWSTATE': soup.find('input', {'name': '__VIEWSTATE'}).get('value', ''),
+                    '__VIEWSTATEGENERATOR': soup.find('input', {'name': '__VIEWSTATEGENERATOR'}).get('value', ''),
+                    '__EVENTVALIDATION': soup.find('input', {'name': '__EVENTVALIDATION'}).get('value', ''),
+                    'TradeComTabs1$RadTabStrip1:': '{"State":{},"TabState":{"TradeComTabs1_RadTabStrip1_tabTPI":{"Selected":true},"TradeComTabs1_RadTabStrip1_tabTPI_tabTPIC":{"Selected":true}}}',
+                    'dropReporter': '076',
+                    'dropYear': 2016,
+                    'lbxSector': sector,
+                    'btnRedo': 'Redo'}
 
-    data = {'__EVENTTARGET': '',
-            '__EVENTARGUMENT': '',
-            '__LASTFOCUS': '',
-            '__VIEWSTATE': soup.find('input', {'name': '__VIEWSTATE'}).get('value', ''),
-            '__VIEWSTATEGENERATOR': soup.find('input', {'name': '__VIEWSTATEGENERATOR'}).get('value', ''),
-            '__EVENTVALIDATION': soup.find('input', {'name': '__EVENTVALIDATION'}).get('value', ''),
-            'TradeComTabs1$RadTabStrip1:': '{"State":{},"TabState":{"TradeComTabs1_RadTabStrip1_tabTPI":{"Selected":true},"TradeComTabs1_RadTabStrip1_tabTPI_tabTPIC":{"Selected":true}}}',
-            'dropReporter': '076',
-            'dropYear': 2016,
-            'lbxSector': '01',
-            'btnRedo': 'Redo'}
-
-    response = session.post(base_url, data=data)
-    soup = BeautifulSoup(response.content, "lxml")
-
-    print_values(soup)
+            response = session.post(base_url, data=data)
+            soup = BeautifulSoup(response.content, "lxml")
+            print_values(soup)
 
 
 if __name__ == '__main__':
