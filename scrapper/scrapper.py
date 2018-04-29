@@ -4,7 +4,7 @@ import pandas
 import logging as log
 
 url = "https://tradecompetitivenessmap.intracen.org/TPIC.aspx"
-sectors = ["%.2d" % i for i in range(1, 4)]
+sectors = ["%.2d" % i for i in range(1, 2)]
 headers = ['N', 'G1', 'G2', 'G3', 'G4', 'G5', 'G6', 'P1', 'P2', 'P3', 'P4a', 'P4b',
            'P5a', 'P5b', 'C1', 'C1a', 'C1b', 'C1c', 'C1d', 'C2', 'A', 'P', 'C']
 
@@ -27,7 +27,6 @@ def to_array(soup):
 
 def main():
     with requests.Session() as session:
-        session = requests.Session()
         response = session.get(url)
         data = basic_data(BeautifulSoup(response.content, "lxml"))
         values_of_country = []
@@ -37,13 +36,13 @@ def main():
             response = session.post(url, data=build_data(data, sector, country))
             soup = BeautifulSoup(response.content, "lxml")
             values_of_country += to_array(soup)
-        pandas.DataFrame(values_of_country, columns=headers).to_csv("countries/{}".format(country))
+        pandas.DataFrame(values_of_country, columns=headers).to_csv("countries/{}".format(country), index=False)
         print(pandas.read_csv("countries/{}".format(country)))
 
 
 def build_data(data, sector, country, year=2016):
     data['dropReporter'] = country
-    data['dropYear'] = 2016
+    data['dropYear'] = year
     data['lbxSector'] = sector
     return data
 
@@ -59,6 +58,16 @@ def basic_data(soup):
             'btnRedo': 'Redo'}
 
 
+def get_country_number_map():
+    with requests.Session() as session:
+        response = session.get(url)
+        soup = BeautifulSoup(response.content, "lxml")
+        country_number = {tag.text: tag['value'] for tag in
+                          soup.find("select", {"id": "dropReporter"}).findAll("option")}
+    return country_number
+
+
 if __name__ == '__main__':
     log.basicConfig(level=log.INFO)
-    main()
+    # get_country_number_map()
+    # main()
