@@ -78,7 +78,7 @@ def get_list_of_countries():
 
 def save_all_countries_info():
     log.info("Process have been started...")
-    for number, country in enumerate(get_list_of_countries()[:1]):
+    for number, country in enumerate(get_list_of_countries()):
         log.info("Country: %s number: %s", country, number + 1)
         get_country_data_frame(country).to_csv("countries/{}.csv".format(country))
         log.info("Country: %s have been saved.", country)
@@ -94,3 +94,4 @@ def main():
 if __name__ == '__main__':
     log.basicConfig(level=log.INFO)
     main()
+    # print(get_list_of_countries()[21:])
