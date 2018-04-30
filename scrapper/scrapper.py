@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import pandas
 import logging as log
+import csv
 
 url = "https://tradecompetitivenessmap.intracen.org/TPIC.aspx"
 sectors = ["%.2d" % i for i in range(1, 2)]
@@ -67,7 +68,16 @@ def get_country_number_map():
     return country_number
 
 
+def get_list_of_countries():
+    with open('sub-saharan africa.csv', 'r') as file:
+        return [line.strip() for line in file]
+
+
+def country_number_map():
+    return {row[0]: row[1] for row in csv.reader(open('country-number.csv'))}
+
+
 if __name__ == '__main__':
     log.basicConfig(level=log.INFO)
-    # get_country_number_map()
+    # print(get_list_of_countries())
     # main()
