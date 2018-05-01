@@ -83,11 +83,11 @@ def plot_board(centers, first_centers, real_centers, clusters, X):
     if centers and clusters:
         for m, cluster in clusters.items():
             cs = cm.spectral(1. * m / K)
-            plt.plot(first_centers[m][0], first_centers[m][1], '.', marker='scrapping',
+            plt.plot(first_centers[m][0], first_centers[m][1], '.', marker='o',
                      markersize=8, color='grey')
             plt.plot(real_centers[m][0], real_centers[m][1], '.', marker='.',
                      markersize=12, color='red')
-            # plt.plot(centers[m][0], centers[m][1], 'scrapping', marker='*',
+            # plt.plot(centers[m][0], centers[m][1], 'o', marker='*',
             #          markersize=12, color=cs)
             plt.plot([point[0] for point in clusters[m]], [point[1] for point in clusters[m]], '.',
                      markersize=8, color=cs, alpha=0.5)
