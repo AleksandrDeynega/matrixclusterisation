@@ -9,7 +9,7 @@ class KMeans:
                  n_init=10):
         self.K = K
         if X is None:
-            raise Exception("If no cleaned is provided!")
+            raise Exception("If no data is provided!")
         self.X = X
         self.distance_between = distance_between
         self.find_center = find_center
