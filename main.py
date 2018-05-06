@@ -1,11 +1,10 @@
 import random
-import visualization
-import utils
-import distances
-import numpy as np
-from sklearn.cluster import AffinityPropagation
-from sklearn.cluster import DBSCAN
 
+from sklearn.cluster import AffinityPropagation
+
+import distances
+import utils
+import visualization
 from matrix import MatrixBuilder
 
 if __name__ == "__main__":
