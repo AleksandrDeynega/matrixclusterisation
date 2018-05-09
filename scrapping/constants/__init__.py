@@ -2,11 +2,11 @@ import csv
 
 
 def get_country_number_map_from_file():
-    return {row[0]: row[1] for row in csv.reader(open('country-number.csv'))}
+    return {row[0]: row[1] for row in csv.reader(open('/Users/ozzy/PycharmProjects/matrixclusterisation/scrapping/constants/country-number.csv'))}
 
 
 def get_list_of_countries():
-    with open('sub-saharan africa.csv', 'r') as file:
+    with open('/Users/ozzy/PycharmProjects/matrixclusterisation/scrapping/constants/sub-saharan africa.csv', 'r') as file:
         return [line.strip() for line in file]
 
 
