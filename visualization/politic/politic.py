@@ -29,8 +29,9 @@ def add_countries(countries, color):
 
 
 def plot_clusters(clusters):
+    colors = ['aqua', 'orangered', 'lime', 'lavender', 'chartreuse']
     for label, countries in zip(clusters.keys(), clusters.values()):
-        add_countries(countries, np.random.rand(3))
+        add_countries(countries, colors[label])
     plt.show()
 
 
@@ -38,7 +39,7 @@ def add_country(country, color):
     if country == "Seychelles" or country == "Mauritius":
         return
     seg = map.Africa[country_codes.index(country_code_dict[country])]
-    poly = Polygon(seg, facecolor=color, edgecolor='black')
+    poly = Polygon(seg, facecolor=color, edgecolor=color)
     ax.add_patch(poly)
 
 

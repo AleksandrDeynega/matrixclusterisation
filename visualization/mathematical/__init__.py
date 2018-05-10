@@ -27,7 +27,7 @@ class MatrixClusterPlotter:
         print("length :" + str(len(self.cluster)))
         for i, matrix in enumerate(self.cluster):
             self.add_subplot_of_matrix(i + 11, matrix)
-        plt.savefig("output/Cluster: " + str(self.key), bbox_inches='tight', dpi=200)
+        plt.savefig("/Users/ozzy/PycharmProjects/matrixclusterisation/visualization/mathematical/output/Cluster: " + str(self.key), bbox_inches='tight', dpi=200)
 
     def title(self):
         return "\n".join(["Center " + str(self.key) + " : ",
