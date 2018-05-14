@@ -22,7 +22,7 @@ if __name__ == "__main__":
     print(af.labels_)
     centers = utils.build_centers(af.cluster_centers_indices_, X)
     clusters = utils.build_clusters(af.labels_, X)
-    visualization.mathematical.plot_clustered_matrix(clusters, centers)
+    visualization.mathematical.plot_clusters(clusters, centers)
 
 
     # kmeans = KMeans(4, X, find_center=find_center,
