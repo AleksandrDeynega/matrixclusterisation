@@ -13,7 +13,7 @@ def main():
     frames = []
     for country in list_of_countries:
         frames.append(pandas.read_csv(
-            '/Users/ozzy/PycharmProjects/matrixclusterisation/data/raw/countries/{}.csv'.format(country),
+            '/Users/ozzy/PycharmProjects/matrixclusterisation/data/bad/countries/{}.csv'.format(country),
             index_col=0
         ).loc[sectors, needed_headers])
     result = pandas.concat(frames)

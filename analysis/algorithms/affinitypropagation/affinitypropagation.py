@@ -2,6 +2,7 @@ from sklearn.cluster import AffinityPropagation
 import distances
 import utils
 import visualization.mathematical
+import visualization.politic
 from analysis.constants import list_of_matrix
 
 if __name__ == '__main__':
@@ -11,4 +12,6 @@ if __name__ == '__main__':
     print(af.labels_)
     centers = utils.build_centers(af.cluster_centers_indices_, X)
     clusters = utils.build_clusters(af.labels_, X)
-    visualization.mathematical.plot_clusters(clusters, centers)
+
+    # mathematical.plot_clusters(clusters)
+

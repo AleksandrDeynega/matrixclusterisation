@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import numpy as np
+from utils import build_clusters
 import csv
 from mpl_toolkits.basemap import Basemap
 from matplotlib.patches import Polygon
@@ -32,7 +32,8 @@ def add_countries(countries, color):
         add_country(country, color)
 
 
-def plot_clusters(clusters):
+def plot_clusters(labels):
+    clusters = build_clusters(labels, list_of_countries)
     # colors = ['aqua', 'orangered', 'lime', 'chartreuse', 'lavender']
     colors = ['b', 'g', 'r', 'c', 'm', 'y', 'k', 'w']
     for label, countries in zip(clusters.keys(), clusters.values()):
